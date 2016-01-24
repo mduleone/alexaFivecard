@@ -1,0 +1,92 @@
+{
+  "intents": [
+    {
+      "intent": "NameLookup",
+      "slots": [
+        {
+          "name": "name",
+          "type": "LITERAL"
+        }
+      ]
+    }, 
+    {
+      "intent": "NumberLookup",
+      "slots": [
+        {
+          "name": "number",
+          "type": "NUMBER"
+        }
+      ]
+    }, 
+  ]
+}
+
+NameLookup {name}
+NameLookup about {name}
+NameLookup tell me about {name}
+NameLookup tell me about pokemon {name}
+NameLookup tell me about poke mon {name}
+NameLookup tell me about polkamon {name}
+NameLookup tell me about polka mon {name}
+NameLookup to tell me about {name}
+NameLookup to tell me about pokemon {name}
+NameLookup to tell me about poke mon {name}
+NameLookup to tell me about polkamon {name}
+NameLookup to tell me about polka mon {name}
+
+NumberLookup number {one hundred twenty-three|number}
+NumberLookup number {one two three|number}
+NumberLookup number {fifty-seven|number}
+NumberLookup number {five seven|number}
+NumberLookup number {thirteen|number}
+NumberLookup number {one three|number}
+NumberLookup number {four|number}
+NumberLookup about {one hundred twenty-three|number}
+NumberLookup about {one two three|number}
+NumberLookup about {fifty-seven|number}
+NumberLookup about {five seven|number}
+NumberLookup about {thirteen|number}
+NumberLookup about {one three|number}
+NumberLookup about {four|number}
+NumberLookup about number {one hundred twenty-three|number}
+NumberLookup about number {one two three|number}
+NumberLookup about number {fifty-seven|number}
+NumberLookup about number {five seven|number}
+NumberLookup about number {thirteen|number}
+NumberLookup about number {one three|number}
+NumberLookup about number {four|number}
+NumberLookup about pokemon number {one hundred twenty-three|number}
+NumberLookup about pokemon number {one two three|number}
+NumberLookup about pokemon number {fifty-seven|number}
+NumberLookup about pokemon number {five seven|number}
+NumberLookup about pokemon number {thirteen|number}
+NumberLookup about pokemon number {one three|number}
+NumberLookup about pokemon number {four|number}
+NumberLookup to tell me about pokemon number {one hundred twenty-three|number}
+NumberLookup to tell me about pokemon number {one two three|number}
+NumberLookup to tell me about pokemon number {fifty-seven|number}
+NumberLookup to tell me about pokemon number {five seven|number}
+NumberLookup to tell me about pokemon number {thirteen|number}
+NumberLookup to tell me about pokemon number {one three|number}
+NumberLookup to tell me about pokemon number {four|number}
+NumberLookup to tell me about poke mon number {one hundred twenty-three|number}
+NumberLookup to tell me about poke mon number {one two three|number}
+NumberLookup to tell me about poke mon number {fifty-seven|number}
+NumberLookup to tell me about poke mon number {five seven|number}
+NumberLookup to tell me about poke mon number {thirteen|number}
+NumberLookup to tell me about poke mon number {one three|number}
+NumberLookup to tell me about poke mon number {four|number}
+NumberLookup to tell me about polkamon number {one hundred twenty-three|number}
+NumberLookup to tell me about polkamon number {one two three|number}
+NumberLookup to tell me about polkamon number {fifty-seven|number}
+NumberLookup to tell me about polkamon number {five seven|number}
+NumberLookup to tell me about polkamon number {thirteen|number}
+NumberLookup to tell me about polkamon number {one three|number}
+NumberLookup to tell me about polkamon number {four|number}
+NumberLookup to tell me about index number {one hundred twenty-three|number}
+NumberLookup to tell me about index number {one two three|number}
+NumberLookup to tell me about index number {fifty-seven|number}
+NumberLookup to tell me about index number {five seven|number}
+NumberLookup to tell me about index number {thirteen|number}
+NumberLookup to tell me about index number {one three|number}
+NumberLookup to tell me about index number {four|number}  
