@@ -4,11 +4,13 @@
   "description": "Alexa Five Card Draw App",
   "main": "fivecard.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "package": "zip -r package.zip -x \\*.md \\*.txt \\*.log .gitignore .DS_Store package.json -u ."
   },
   "author": "Matt DuLeone <matt@duleone.com> (http://matt.duleone.com/)",
   "license": "ISC",
   "dependencies": {
-    "js-combinatorics": "^0.5.0"
+    "js-combinatorics": "^0.5.0",
+    "lodash-node": "^3.10.1"
   }
 }

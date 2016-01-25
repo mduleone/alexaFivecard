@@ -1,3 +1,26 @@
+Flow:
+Alexa, Open five card draw
+Do you want to play a game of Five Card Draw?
+No Yes
+|   +-You have been dealt <hand>. You have <Value>. How many cards do you want to discard?
+|   ^ 0 1+
+|   | | What card do you want to discard?
+|   | | ^ Huh?  Understand
+|   | | | |     You discarded <card>. / <Card> is not in your hand. 
+|   | | +-+     |     
+|   | | |       |
+|   | | +-------+
+|   | |         |
+|   | |         You have been dealt <draw>. You have <value>.
+|   | |         |
+|   | + I take (rand(0, 3) cards. I have <dealerValue>. You have <value>. <You/I> Win!
+|   |   Would you like to play again?
+|   |   Yes No
+|   |   |   |
+|   +---+   |
+|           |
++-----------+--Thanks for Playing
+
 {
   "intents": [
     {
