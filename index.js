@@ -22,7 +22,9 @@ var handleYesIntent = function (intent, session, response) {
     // deep copy
     var session = _.assign({}, session);
 
-    if (!session.playing) {
+    if (!session.playing ||
+        session.state === states.NEW_GAME ||
+        session.state === states.DETERMINE_WINNER) {
         // New Game!
         var deck = utils.newDeck();
         var playerHand = [];
@@ -38,6 +40,7 @@ var handleYesIntent = function (intent, session, response) {
             playerHand: playerHand,
             dealerHand: dealerHand,
             state: states.DISCARDING,
+            justDiscarded: null,
         }
         text += "Your hand is ";
         text += utils.convertHandToSpeech(session.playerHand);
@@ -47,10 +50,23 @@ var handleYesIntent = function (intent, session, response) {
         cardText += utils.convertHandToEmoji(session.playerHand) + "\m";
         
         heading = "Welcome to Five Card Draw!";
-
+        tell = false;
+        withCard = true;
     } else if (session.state == states.DISCARDING) {
-    } else if (session.state == states.DETERMINE_WINNER) {
-    } else if (session.state == states.NEW_GAME) {
+        if (session.justDiscarded) {
+            cardText += "You just discareded " + utils.convertHandToEmoji(session.justDiscarded) + "\n";
+        }
+
+        text += "Your hand is ";
+        text += utils.convertHandToSpeech(session.playerHand);
+        text += "Do you want to discard a card?";
+        
+        cardText += "Your hand is \n";
+        cardText += utils.convertHandToEmoji(session.playerHand) + "\m";
+
+        heading += "What do you want to discard?";
+        tell = false;
+        withCard = true;
     }
 
     response._session = session;
