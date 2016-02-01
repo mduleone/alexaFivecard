@@ -5,7 +5,7 @@
   "main": "fivecard.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "package": "zip -r package.zip -x \\*.md \\*.txt \\*.log .gitignore .DS_Store package.json -u ."
+    "package": "./package.sh"
   },
   "author": "Matt DuLeone <matt@duleone.com> (http://matt.duleone.com/)",
   "license": "ISC",

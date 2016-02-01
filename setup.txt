@@ -1,115 +1,72 @@
+This flow is not accurate. It changed while I was building it and I didn't come and update this because I started to do it, it became too annoying.
 Flow:
 Alexa, Open five card draw
 Do you want to play a game of Five Card Draw?
 No Yes
-|   +-You have been dealt <hand>. You have <Value>. How many cards do you want to discard?
-|   ^ 0 1+
-|   | | What card do you want to discard?
-|   | | ^ Huh?  Understand
-|   | | | |     You discarded <card>. / <Card> is not in your hand. 
-|   | | +-+     |     
-|   | | |       |
-|   | | +-------+
-|   | |         |
-|   | |         You have been dealt <draw>. You have <value>.
-|   | |         |
-|   | + I take (rand(0, 3) cards. I have <dealerValue>. You have <value>. <You/I> Win!
-|   |   Would you like to play again?
-|   |   Yes No
-|   |   |   |
-|   +---+   |
-|           |
-+-----------+--Thanks for Playing
+|   +-You have <hand>. You have <Value>. Do you want to discard?
+|   ^ No Yes
+|   | |   What card do you want to discard?
+|   | |   ^ Huh?  Understand
+|   | |   | |     You discarded <card>. / <Card> is not in your hand. 
+|   | |   +-+     |     
+|   | |   |       |
+|   | |   +-------+
+|   | |           |
+|   | |           You have been dealt <draw>. You have <value>.
+|   | |           |
+|   | +---I take __ cards. I have <dV>. You have <v>. <You/I> Win!
+|   |     Would you like to play again?
+|   |     Yes No
+|   |     |   |
+|   +-----+   |
+|             |
++-------------+--Thanks for Playing
 
 {
-  "intents": [
-    {
-      "intent": "NameLookup",
-      "slots": [
+    "intents": [
         {
-          "name": "name",
-          "type": "LITERAL"
+            "intent": "DiscardCard",
+            "slots": [
+                {
+                    "name": "rank",
+                    "type": "RANK"
+                },
+                {
+                    "name": "suit",
+                    "type": "SUIT"
+                }
+            ]
+        }, {
+            "intent": "NewGame"
+        }, {
+            "intent": "AMAZON.YesIntent"
+        }, {
+            "intent": "AMAZON.NoIntent"
+        }, {
+            "intent": "AMAZON.StopIntent"
+        }, {
+            "intent": "AMAZON.CancelIntent"
         }
-      ]
-    }, 
-    {
-      "intent": "NumberLookup",
-      "slots": [
-        {
-          "name": "number",
-          "type": "NUMBER"
-        }
-      ]
-    }, 
-  ]
+    ]
 }
 
-NameLookup {name}
-NameLookup about {name}
-NameLookup tell me about {name}
-NameLookup tell me about pokemon {name}
-NameLookup tell me about poke mon {name}
-NameLookup tell me about polkamon {name}
-NameLookup tell me about polka mon {name}
-NameLookup to tell me about {name}
-NameLookup to tell me about pokemon {name}
-NameLookup to tell me about poke mon {name}
-NameLookup to tell me about polkamon {name}
-NameLookup to tell me about polka mon {name}
+DiscardCard the {rank} {suit}
+DiscardCard the {rank} of {suit}
+DiscardCard {rank} {suit}
+DiscardCard {rank} of {suit}
 
-NumberLookup number {one hundred twenty-three|number}
-NumberLookup number {one two three|number}
-NumberLookup number {fifty-seven|number}
-NumberLookup number {five seven|number}
-NumberLookup number {thirteen|number}
-NumberLookup number {one three|number}
-NumberLookup number {four|number}
-NumberLookup about {one hundred twenty-three|number}
-NumberLookup about {one two three|number}
-NumberLookup about {fifty-seven|number}
-NumberLookup about {five seven|number}
-NumberLookup about {thirteen|number}
-NumberLookup about {one three|number}
-NumberLookup about {four|number}
-NumberLookup about number {one hundred twenty-three|number}
-NumberLookup about number {one two three|number}
-NumberLookup about number {fifty-seven|number}
-NumberLookup about number {five seven|number}
-NumberLookup about number {thirteen|number}
-NumberLookup about number {one three|number}
-NumberLookup about number {four|number}
-NumberLookup about pokemon number {one hundred twenty-three|number}
-NumberLookup about pokemon number {one two three|number}
-NumberLookup about pokemon number {fifty-seven|number}
-NumberLookup about pokemon number {five seven|number}
-NumberLookup about pokemon number {thirteen|number}
-NumberLookup about pokemon number {one three|number}
-NumberLookup about pokemon number {four|number}
-NumberLookup to tell me about pokemon number {one hundred twenty-three|number}
-NumberLookup to tell me about pokemon number {one two three|number}
-NumberLookup to tell me about pokemon number {fifty-seven|number}
-NumberLookup to tell me about pokemon number {five seven|number}
-NumberLookup to tell me about pokemon number {thirteen|number}
-NumberLookup to tell me about pokemon number {one three|number}
-NumberLookup to tell me about pokemon number {four|number}
-NumberLookup to tell me about poke mon number {one hundred twenty-three|number}
-NumberLookup to tell me about poke mon number {one two three|number}
-NumberLookup to tell me about poke mon number {fifty-seven|number}
-NumberLookup to tell me about poke mon number {five seven|number}
-NumberLookup to tell me about poke mon number {thirteen|number}
-NumberLookup to tell me about poke mon number {one three|number}
-NumberLookup to tell me about poke mon number {four|number}
-NumberLookup to tell me about polkamon number {one hundred twenty-three|number}
-NumberLookup to tell me about polkamon number {one two three|number}
-NumberLookup to tell me about polkamon number {fifty-seven|number}
-NumberLookup to tell me about polkamon number {five seven|number}
-NumberLookup to tell me about polkamon number {thirteen|number}
-NumberLookup to tell me about polkamon number {one three|number}
-NumberLookup to tell me about polkamon number {four|number}
-NumberLookup to tell me about index number {one hundred twenty-three|number}
-NumberLookup to tell me about index number {one two three|number}
-NumberLookup to tell me about index number {fifty-seven|number}
-NumberLookup to tell me about index number {five seven|number}
-NumberLookup to tell me about index number {thirteen|number}
-NumberLookup to tell me about index number {one three|number}
-NumberLookup to tell me about index number {four|number}  
+NewGame a new game
+NewGame a new deal
+NewGame a new hand
+NewGame a game
+NewGame a deal
+NewGame a hand
+NewGame new game
+NewGame new deal
+NewGame new hand
+NewGame game
+NewGame deal
+NewGame hand
+NewGame play
+NewGame play a new game
+NewGame play five card draw

@@ -1,1 +1,3 @@
-Alexa Skill to play single player five card draw
+# Five card draw!
+
+An Alexa skill for you to play five card draw against Alexa!

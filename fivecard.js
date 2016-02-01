@@ -23,6 +23,7 @@ function discard(discard, hand, deck) {
                 game: {
                     deck: deck,
                     hand: hand,
+                    draw: [],
                 },
             };
         }
@@ -38,9 +39,21 @@ function discard(discard, hand, deck) {
         error: null,
         game: {
             deck: newDraw.deck,
-            hand: hand.concat(newDraw.draw),
+            hand: utils.sortHand(hand.concat(newDraw.draw)),
+            draw: utils.sortHand(newDraw.draw),
         },
     };
+}
+
+function determineWinner(hand1, hand2) {
+    var hand1 = poker.convertCards(hand1.join(''));
+    var hand2 = poker.convertCards(hand2.join(''));
+
+    var hands = hand1.concat(hand2);
+
+    // var ret = poker.compareHands(hand1, hand2);
+    // callback(ret.err, ret.winner, ret.handVal, ret.hand);
+    return poker.compareHands(hand1, hand2);
 }
 
 function test() {
@@ -64,4 +77,5 @@ module.exports = {
     newGame: newGame,
     discard: discard,
     test: test,
+    determineWinner: determineWinner,
 }
