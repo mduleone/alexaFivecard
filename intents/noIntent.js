@@ -28,24 +28,12 @@ module.exports = function (intent, session, response) {
             }
             break;
         case fcUtils.states.DISCARDING:
-            console.log(
-                '\n\n!!!!!!!!!!!!!!playerHand',
-                newSession.attributes.playerHand
-            );
-            console.log(
-                '\n\n!!!!!!!!!!!!!!toDiscard',
-                newSession.attributes.toDiscard
-            );
             var nextStage = fivecard.discard(
                 newSession.attributes.toDiscard,
                 newSession.attributes.playerHand,
                 newSession.attributes.deck
             );
-            
-            console.log(
-                '\n\n!!!!!!!!!!!!!!postDiscrd',
-                nextStage
-            );
+
             newSession.attributes.playerHand = nextStage.game.hand;
 
             var texts = fcUtils.getWinnerTexts(
@@ -70,8 +58,6 @@ module.exports = function (intent, session, response) {
             }
             cardText += utils.convertHandToEmoji(nextStage.game.draw) + "\n";
 
-            console.log('\n\n!!!!!!!!!!texts.cardText', texts.cardText);
-
             text += texts.text;
             cardText += texts.cardText;
             heading += texts.heading;
@@ -85,24 +71,6 @@ module.exports = function (intent, session, response) {
             withCard = true;
             break;
     }
-
-    console.log(
-        '\n\n!!!!!!!!!!!!!!handleNoIntent after newSession',
-        newSession
-    );
-    response._session = newSession;
-    console.log(
-        '\n\n!!!!!!!!!!!!!!handleNoIntent after cardText\n',
-         cardText
-     );
-    console.log(
-        '\n\n!!!!!!!!!!!!!!handleNoIntent after tell',
-        tell
-    );
-    console.log(
-        '\n\n!!!!!!!!!!!!!!handleNoIntent after withCard',
-        withCard
-    );
 
     if (tell && withCard) {
         return response.tellWithCard(text, heading, cardText);

@@ -14,11 +14,7 @@ module.exports = function (intent, session, response) {
     var suit = intent.slots.suit.value;
 
     var card = fcUtils.translateCard(rank, suit);
-    
-    console.log(
-        '\n\n!!!!!!!!!!!!!!!!!! SESSION',
-        session
-    );
+
     var newSession = _.assign({}, session);
     var currentHand = newSession.attributes.playerHand.map(function(el) {
         return el;
@@ -26,25 +22,16 @@ module.exports = function (intent, session, response) {
     for (var cardIndex in newSession.attributes.toDiscard) {
         var currentCard = newSession.attributes.toDiscard[cardIndex]
 
-        console.log('\n!!!!!currentCard', currentCard);
-        console.log(
-            '\n!!!!!currentHand.indexOf(currentCard)',
-            currentHand.indexOf(currentCard)
-        );
-        console.log(
-            '\n!!!!!currentHand[currentHand.indexOf(currentCard)]',
-            currentHand[currentHand.indexOf(currentCard)]
-        );
         currentHand = currentHand.filter(function(el) {
             return el !== currentCard;
         }, []);
     }
-    console.log('\nCURRENT HAND', currentHand);
-    console.log('\nDISCARDING CARD', card);
 
     if (currentHand.indexOf(card) === -1) {
-        text += "I'm sorry, but the " + rank + " of " + suit + " is not in your hand. ";
-        text += "Your hand is " + utils.convertHandToSpeech(newSession.attributes.playerHand) + ". ";
+        text += "I'm sorry, but the " + rank + " of " + suit + " ";
+        text += "is not in your hand. ";
+        text += "Your hand is ";
+        text += utils.convertHandToSpeech(newSession.attributes.playerHand) + ". ";
         text += "Do you want to discard a card?"
         
         repromptText += "Do you want to discard a card?"
@@ -52,8 +39,6 @@ module.exports = function (intent, session, response) {
     }
 
     newSession.attributes.toDiscard.push(card);
-
-    console.log('\nTO DISCARD', newSession.attributes.toDiscard);
 
     currentHand = currentHand.filter(function(el) {
         return el !== card;
@@ -77,10 +62,6 @@ module.exports = function (intent, session, response) {
         repromptText += utils.convertHandToSpeech(currentHand);
         repromptText += "Do you want to discard another card?"
     } else {
-        console.log(
-            '!!!!!!!!! DISCARD INTENT 4 CARDS newSession',
-            newSession
-        );
         var nextStage = fivecard.discard(
             newSession.attributes.toDiscard,
             newSession.attributes.playerHand,

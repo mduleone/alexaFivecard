@@ -118,11 +118,10 @@ function convertHandToSpeech(cards) {
 }
 
 function evaluateHandToSpeech(hand) {
-    console.log('\n!!!!!!!!evaluateHandToSpeech hand', hand);
     var convertedHand = poker.convertCards(sortHand(hand).join(''));
-    console.log('\n!!!!!!!!evaluateHandToSpeech convertedHand', convertedHand);
     hand = sortHandDesc(hand);
     var handVal = poker.evalHand(convertedHand);
+    
     switch (handVal) {
         case STRAIGHTFLUSH:
             if (hand[0].slice(0,1) === 'A') {
