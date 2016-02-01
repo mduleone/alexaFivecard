@@ -51,7 +51,12 @@ module.exports = function (intent, session, response) {
     } else if (newSession.attributes.state === fcUtils.states.DISCARDING) {
         var currentHand = newSession.attributes.playerHand;
         for (var card in newSession.attributes.toDiscard) {
-            currentHand.splice(currentHand.indexOf(newSession.attributes.toDiscard[card]), 1);
+            currentHand.splice(
+                currentHand.indexOf(
+                    newSession.attributes.toDiscard[card]
+                ),
+                1
+            );
         }
 
         text += "Your hand is ";

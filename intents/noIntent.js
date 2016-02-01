@@ -42,7 +42,10 @@ module.exports = function (intent, session, response) {
                 newSession.attributes.deck
             );
             
-            console.log('\n\n!!!!!!!!!!!!!!postDiscrd', nextStage);
+            console.log(
+                '\n\n!!!!!!!!!!!!!!postDiscrd',
+                nextStage
+            );
             newSession.attributes.playerHand = nextStage.game.hand;
 
             var texts = fcUtils.getWinnerTexts(

@@ -14,18 +14,11 @@ module.exports = function (intent, session, response) {
     var suit = intent.slots.suit.value;
 
     var card = fcUtils.translateCard(rank, suit);
-
-    /**
-     * newSession = {
-     *     playing: true,
-     *     deck: deck,
-     *     playerHand: playerHand,
-     *     dealerHand: dealerHand,
-     *     state: fcUtils.states.DISCARDING,
-     *     toDiscard: [],
-     * }
-     */
-    console.log('\n\n!!!!!!!!!!!!!!!!!! SESSION', session);
+    
+    console.log(
+        '\n\n!!!!!!!!!!!!!!!!!! SESSION',
+        session
+    );
     var newSession = _.assign({}, session);
     var currentHand = newSession.attributes.playerHand.map(function(el) {
         return el;
@@ -70,27 +63,44 @@ module.exports = function (intent, session, response) {
     if (newSession.attributes.toDiscard.length < 4) {
         heading = "Do you want to discard another card?";
 
-        text += "Your hand is now " + utils.convertHandToSpeech(currentHand) + ". ";
+        text += "Your hand is now ";
+        text += utils.convertHandToSpeech(currentHand) + ". ";
         text += "Do you want to discard another card?"
 
-        cardText += "You've discarded " + utils.convertCardToEmoji(card) + "\n";
-        cardText += "Your hand is now " + utils.convertHandToEmoji(currentHand) + "\n";
+        cardText += "You've discarded ";
+        cardText += utils.convertCardToEmoji(card) + "\n";
+        cardText += "Your hand is now ";
+        cardText += utils.convertHandToEmoji(currentHand) + "\n";
         cardText += "Do you want to discard another card?"
 
-        repromptText += "Your hand is now " + utils.convertHandToSpeech(currentHand);
+        repromptText += "Your hand is now ";
+        repromptText += utils.convertHandToSpeech(currentHand);
         repromptText += "Do you want to discard another card?"
     } else {
-        console.log('!!!!!!!!! DISCARD INTENT 4 CARDS newSession', newSession);
-        var nextStage = fivecard.discard(newSession.attributes.toDiscard, newSession.attributes.playerHand, newSession.attributes.deck);
+        console.log(
+            '!!!!!!!!! DISCARD INTENT 4 CARDS newSession',
+            newSession
+        );
+        var nextStage = fivecard.discard(
+            newSession.attributes.toDiscard,
+            newSession.attributes.playerHand,
+            newSession.attributes.deck
+        );
         
         newSession.attributes.playerHand = nextStage.game.hand;
 
-        var texts = fcUtils.getWinnerTexts(newSession.attributes.playerHand, newSession.attributes.dealerHand);
+        var texts = fcUtils.getWinnerTexts(
+            newSession.attributes.playerHand,
+            newSession.attributes.dealerHand
+        );
 
-        text += "You draw 4 cards: " + utils.convertHandToSpeech(nextStage.game.draw) + ". ";
+        text += "You draw 4 cards: ";
+        text += utils.convertHandToSpeech(nextStage.game.draw) + ". ";
 
-        cardText += "You've discarded " + utils.convertCardToEmoji(card) + "\n";
-        cardText += "You draw 4 cards: " + utils.convertHandToEmoji(nextStage.game.draw) + "\n";
+        cardText += "You've discarded ";
+        cardText += utils.convertCardToEmoji(card) + "\n";
+        cardText += "You draw 4 cards: ";
+        cardText += utils.convertHandToEmoji(nextStage.game.draw) + "\n";
 
         heading = texts.heading;
         text += texts.text;

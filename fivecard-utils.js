@@ -46,16 +46,20 @@ module.exports.getWinnerTexts = function (playerHand, dealerHand) {
 
     text += "Do you want to play again?";
 
-    cardText += "Your hand is " + utils.convertHandToEmoji(playerHand) + "\n";
-    cardText += "You have " + playerEvalSpeech + "\n";
+    cardText += "Your hand is ";
+    cardText += utils.convertHandToEmoji(playerHand) + "\n";
+    cardText += "You have ";
+    cardText += playerEvalSpeech + "\n";
     cardText += "I draw ";
     if (draws === 1) {
         cardText += "1 card.\n";
     } else {
         cardText += draws + " cards.\n";
     }
-    cardText += "My hand is " + utils.convertHandToEmoji(dealerHand) + "\n";
-    cardText += "I have " + dealerEvalSpeech + ".\n";
+    cardText += "My hand is ";
+    cardText += utils.convertHandToEmoji(dealerHand) + "\n";
+    cardText += "I have ";
+    cardText += dealerEvalSpeech + ".\n";
     if (winner === 1) {
         cardText += "You win!\n";
     } else if (winner === 2) {
