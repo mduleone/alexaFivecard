@@ -90,8 +90,8 @@ module.exports.translateCard = function (rank, suit) {
         case 'ace':
             rank = 'A';
             break;
-        case 'Duece':
-        case 'duece':
+        case 'Deuce':
+        case 'deuce':
         case 'Two':
         case 'two':
         case '2':
