@@ -11,10 +11,13 @@ module.exports = function (intent, session, response) {
     var tell = false;
     var withCard = true;
 
+    console.log("!!!!!!!!!!\n\n!!!!!!!!!noIntent!!!!!!!!!", intent);
+    console.log("!!!!!!!!!session!!!!!!!!!", session);
     var newSession = _.assign({}, session);
 
     switch (newSession.attributes.state) {
         case fcUtils.states.NEW_GAME:
+            console.log('\n!!!!!!!!!new game');
             if (newSession.attributes.playing) {
                 text += "Thank you for playing Five Card Draw. Play again soon!";
                 cardText += "Thank you for playing Five Card Draw. Play again soon!";
@@ -28,6 +31,7 @@ module.exports = function (intent, session, response) {
             }
             break;
         case fcUtils.states.DISCARDING:
+            console.log('\n!!!!!!!!!discarding');
             var nextStage = fivecard.discard(
                 newSession.attributes.toDiscard,
                 newSession.attributes.playerHand,
@@ -66,11 +70,17 @@ module.exports = function (intent, session, response) {
             newSession.attributes.state = fcUtils.states.NEW_GAME;
             newSession.attributes.playing = true;
 
-
             tell = false;
             withCard = true;
             break;
+        default:
+            console.log('\n!!!!!!!!!default');
+            text += "Please play again soon!";
+            tell = true;
+            withCard = false;
     }
+
+    response._session = newSession;
 
     if (tell && withCard) {
         return response.tellWithCard(text, heading, cardText);

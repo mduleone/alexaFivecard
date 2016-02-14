@@ -10,28 +10,92 @@ module.exports = function (intent, session, response) {
     var heading = "";
     var tell = false;
     var withCard = true;
+    
+    console.log("!!!!!!!!!!\n\n!!!!!!!!!discardIntent!!!!!!!!!", intent);
+    console.log("!!!!!!!!!session!!!!!!!!!", session);
+    var newSession = _.assign({}, session);
+
+    if (typeof newSession.attributes.playing === 'undefined' ||
+        typeof newSession.attributes.state === 'undefined' ||
+        newSession.attributes.playing === false ||
+        newSession.attributes.state === fcUtils.states.NEW_GAME) {
+        
+        console.log('\n!!!!!!!!!new game');
+        // New Game!
+        var deck = utils.newDeck();
+        var playerHand = [];
+        var dealerHand = [];
+        for (var i = 0; i < 5; i++) {
+            playerHand.push(deck.shift());
+            dealerHand.push(deck.shift());
+        }
+
+        playerHand = utils.sortHand(playerHand);
+        dealerHand = utils.sortHand(dealerHand);
+
+        newSession = {
+            attributes: {
+                playing: true,
+                deck: deck,
+                playerHand: playerHand,
+                dealerHand: dealerHand,
+                toDiscard: [],
+                state: fcUtils.states.DISCARDING,
+            }
+        };
+        
+        text += "You can't discard if we haven't started playing yet! ";
+        text += "Let's play a new game. Your hand is ";
+        text += utils.convertHandToSpeech(newSession.attributes.playerHand) + ". ";
+        text += "Do you want to discard a card?";
+        
+        cardText += "You have \n";
+        cardText += utils.convertHandToEmoji(newSession.attributes.playerHand) + "\n";
+        cardText += "Do you want to discard a card?";
+        
+        heading = "Welcome to Five Card Draw!";
+
+        response._session = newSession;
+
+        return response.askWithCard(text, repromptText, heading, cardText);
+    }
+
+    console.log('\n!!!!!!!!!not new game');
     var rank = intent.slots.rank.value;
     var suit = intent.slots.suit.value;
 
-    var card = fcUtils.translateCard(rank, suit);
+    var currentHand = newSession.attributes.playerHand.slice();
 
-    var newSession = _.assign({}, session);
-    var currentHand = newSession.attributes.playerHand.map(function(el) {
-        return el;
-    });
     for (var cardIndex in newSession.attributes.toDiscard) {
         var currentCard = newSession.attributes.toDiscard[cardIndex]
 
         currentHand = currentHand.filter(function(el) {
             return el !== currentCard;
-        }, []);
+        });
     }
 
+    if (typeof rank === 'undefined' || typeof suit === 'undefined') {
+        console.log('\n!!!!!!!!!rank or suit undefined');
+        console.log('\n!!!!!!!!!rank', rank);
+        console.log('\n!!!!!!!!!suit', suit);
+        text += "I'm sorry, but I didn't understand the card. ";
+        text += "Please say the rank and suit. Your hand is ";
+        text += utils.convertHandToSpeech(currentHand) + ". ";
+        text += "Do you want to discard a card?"
+        
+        repromptText += "Do you want to discard a card?"
+
+        return response.ask(text, repromptText);
+    }
+
+    var card = fcUtils.translateCard(rank, suit);
+
     if (currentHand.indexOf(card) === -1) {
+        console.log('\n!!!!!!!!!card not found');
         text += "I'm sorry, but the " + rank + " of " + suit + " ";
         text += "is not in your hand. ";
         text += "Your hand is ";
-        text += utils.convertHandToSpeech(newSession.attributes.playerHand) + ". ";
+        text += utils.convertHandToSpeech(currentHand) + ". ";
         text += "Do you want to discard a card?"
         
         repromptText += "Do you want to discard a card?"
@@ -42,10 +106,11 @@ module.exports = function (intent, session, response) {
 
     currentHand = currentHand.filter(function(el) {
         return el !== card;
-    }, []);
+    });
 
     text += "You've discarded the " + rank + " of " + suit + ". ";
     if (newSession.attributes.toDiscard.length < 4) {
+        console.log('\n!!!!!!!!!discarded, less than 4 total');
         heading = "Do you want to discard another card?";
 
         text += "Your hand is now ";
@@ -62,6 +127,7 @@ module.exports = function (intent, session, response) {
         repromptText += utils.convertHandToSpeech(currentHand);
         repromptText += "Do you want to discard another card?"
     } else {
+        console.log('\n!!!!!!!!!discarded, 4 total');
         var nextStage = fivecard.discard(
             newSession.attributes.toDiscard,
             newSession.attributes.playerHand,
@@ -89,7 +155,7 @@ module.exports = function (intent, session, response) {
         repromptText = "Do you want to play again?";
         
         newSession.attributes.state = fcUtils.states.NEW_GAME;
-        newSession.attributes.playing = false;
+        newSession.attributes.playing = true;
     }
 
     response._session = newSession;

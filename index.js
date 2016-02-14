@@ -14,7 +14,13 @@ var handleDiscardCardIntent = require('./intents/discardIntent');
 var handleYesIntent = require('./intents/yesIntent');
 var handleNoIntent = require('./intents/noIntent');
 var handleStopIntent = require('./intents/stopIntent');
-var handleCancelIntent = require('./intents/stopIntent');
+var handleCancelIntent = require('./intents/cancelIntent');
+var handleRepeatIntent = require('./intents/repeatIntent');
+var handleHelpIntent = require('./intents/helpIntent');
+var handleStartOverIntent = require('./intents/startOverIntent');
+
+//Custom Events
+var events = require('./events');
 
 var FiveCard = function() {
     AlexaSkill.call(this, APP_ID);
@@ -23,24 +29,7 @@ var FiveCard = function() {
 FiveCard.prototype = Object.create(AlexaSkill.prototype);
 FiveCard.prototype.constructor = FiveCard;
 
-FiveCard.prototype.eventHandlers.onLaunch = function (launchRequest, session, response){
-    newSession = {
-        playing: false,
-        deck: utils.newDeck(),
-        playerHand: [],
-        dealerHand: [],
-        toDiscard: [],
-        state: fcUtils.states.NEW_GAME,
-    }
-
-    var output = '';
-    output += 'Welcome to Five Card Draw. Would you like to play a round?';
-
-    var reprompt = 'Would you like to play a round of Five Card Draw?';
-    response._session = newSession;
-
-    response.ask(output, reprompt);
-};
+FiveCard.prototype.eventHandlers.onLaunch = events.onLaunch;
 
 FiveCard.prototype.intentHandlers = {
     NewGame: handleNewGameIntent,
@@ -49,6 +38,9 @@ FiveCard.prototype.intentHandlers = {
     "AMAZON.NoIntent": handleNoIntent,
     "AMAZON.StopIntent": handleStopIntent,
     "AMAZON.CancelIntent": handleCancelIntent,
+    "AMAZON.RepeatIntent": handleRepeatIntent,
+    "AMAZON.HelpIntent": handleHelpIntent,
+    "AMAZON.StartOverIntent": handleStartOverIntent,
 };
 
 

@@ -10,17 +10,13 @@ module.exports = function (intent, session, response) {
     var tell = false;
     var withCard = true;
 
-    console.log("!!!!!!!!!!\n\n!!!!!!!!!yesIntent!!!!!!!!!", intent);
-    console.log("!!!!!!!!!session!!!!!!!!!", session);
-        // deep copy
     var newSession = _.assign({}, session);
 
     if (typeof newSession.attributes.playing === 'undefined' ||
         typeof newSession.attributes.state === 'undefined' ||
         newSession.attributes.playing === false ||
         newSession.attributes.state === fcUtils.states.NEW_GAME) {
-
-        console.log('\n!!!!!!!!!new game!');
+        
         // New Game!
         var deck = utils.newDeck();
         var playerHand = [];
@@ -35,15 +31,16 @@ module.exports = function (intent, session, response) {
 
         newSession = {
             attributes: {
-                    playing: true,
-                    deck: deck,
-                    playerHand: playerHand,
-                    dealerHand: dealerHand,
-                    toDiscard: [],
-                    state: fcUtils.states.DISCARDING,
-                }
-            };
-        text += "Your hand is ";
+                playing: true,
+                deck: deck,
+                playerHand: playerHand,
+                dealerHand: dealerHand,
+                toDiscard: [],
+                state: fcUtils.states.DISCARDING,
+            }
+        };
+        
+        text += "Let's play a new game. Your hand is ";
         text += utils.convertHandToSpeech(newSession.attributes.playerHand) + ". ";
         text += "Do you want to discard a card?";
         
@@ -52,39 +49,34 @@ module.exports = function (intent, session, response) {
         cardText += "Do you want to discard a card?";
         
         heading = "Welcome to Five Card Draw!";
-        tell = false;
-        withCard = true;
-    } else if (newSession.attributes.state === fcUtils.states.DISCARDING) {
-        console.log('\n!!!!!!!!!new game!');
-        var currentHand = newSession.attributes.playerHand.slice(0);
-        for (var card in newSession.attributes.toDiscard) {
-            currentHand.splice(
-                currentHand.indexOf(
-                    newSession.attributes.toDiscard[card]
-                ),
-                1
-            );
-        }
 
-        text += "Your hand is ";
-        text += utils.convertHandToSpeech(currentHand) + ". ";
-        text += "What card do you want to discard?";
+        response._session = newSession;
 
-        repromptText += "Do you want to discard another card?";
-        
-        cardText += "Your hand is \n";
-        cardText += utils.convertHandToEmoji(currentHand) + "\n";
-
-        heading += "What do you want to discard?";
-        tell = false;
-        withCard = true;
-    } else {
-        // Should never happen
-        console.log('\n!!!!!!!!!Not new game or discarding')
-        text += "Please play again soon!";
-        tell = true;
-        withCard = false;
+        return response.askWithCard(text, repromptText, heading, cardText);
     }
+
+    var currentHand = newSession.attributes.playerHand.slice();
+
+    for (var cardIndex in newSession.attributes.toDiscard) {
+        var currentCard = newSession.attributes.toDiscard[cardIndex]
+
+        currentHand = currentHand.filter(function(el) {
+            return el !== currentCard;
+        });
+    }
+
+    text += "Your hand is ";
+    text += utils.convertHandToSpeech(currentHand) + ". ";
+    text += "Do you want to discard a card?";
+
+    repromptText += "Do you want to discard a card?";
+    
+    cardText += "Your hand is \n";
+    cardText += utils.convertHandToEmoji(currentHand) + "\n";
+
+    heading += "Do you want to discard a card?";
+    tell = false;
+    withCard = true;
 
     response._session = newSession;
 

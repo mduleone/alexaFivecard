@@ -255,6 +255,8 @@ module.exports = {
     convertCardToSpeech: convertCardToSpeech,
     convertHandToSpeech: convertHandToSpeech,
     evaluateHandToSpeech: evaluateHandToSpeech,
+    cardToRank: cardToRank,
+    cardToSuit: cardToSuit,
     sortHand: sortHand,
     sortHandDesc: sortHandDesc,
 }

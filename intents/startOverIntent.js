@@ -1,7 +1,6 @@
 var _ = require('lodash-node');
 var utils = require('../poker-utils');
 var fcUtils = require('../fivecard-utils.js');
-var repeatIntent = require('./repeatIntent');
 
 module.exports = function (intent, session, response) {
     var text = "";
@@ -13,16 +12,6 @@ module.exports = function (intent, session, response) {
 
     // deep copy
     var newSession = _.assign({}, session);
-
-    console.log("!!!!!!!!!!\n\n!!!!!!!!!newGameIntent!!!!!!!!!", intent);
-    console.log("!!!!!!!!!session!!!!!!!!!", session);
-
-    if (newSession &&
-        newSession.attributes &&
-        newSession.attributes.playing) {
-        console.log("!!!!!!!!!Firing Repeat Intent!!!!!!!!!");
-        return repeatIntent(intent, session, response);
-    }
 
     // New Game!
     var deck = utils.newDeck();

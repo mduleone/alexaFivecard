@@ -22,6 +22,19 @@ No Yes
 |             |
 +-------------+--Thanks for Playing
 
+Short Description:
+Five Card Draw
+
+Long Description:
+Play five card draw with Alexa!
+
+Five card draw is the most basic variant of poker. You and Alexa each have a five card hand from a standard 52 card deck. You can discard and then draw up to four cards to try to improve your hand.
+
+After Alexa tells you what your hand is and asks if you want to discard, tell her "no" to see who wins, or the rank and suit of the card you want to discard.
+
+Play now and see if you can beat Alexa!
+
+Intent Definitions:
 {
     "intents": [
         {
@@ -33,6 +46,10 @@ No Yes
                 },
                 {
                     "name": "suit",
+                    "type": "SUIT"
+                },
+                {
+                    "name": "singularSuit",
                     "type": "SUIT"
                 }
             ]
@@ -46,15 +63,38 @@ No Yes
             "intent": "AMAZON.StopIntent"
         }, {
             "intent": "AMAZON.CancelIntent"
+        }, {
+            "intent": "AMAZON.RepeatIntent"
+        }, {
+            "intent": "AMAZON.HelpIntent"
+        }, {
+            "intent": "AMAZON.StartOverIntent"
         }
     ]
 }
 
+
+Utterances:
+DiscardCard {rank}
+DiscardCard {suit}
+DiscardCard the {rank}
+DiscardCard the {suit}
 DiscardCard the {rank} {suit}
 DiscardCard the {rank} of {suit}
 DiscardCard {rank} {suit}
 DiscardCard {rank} of {suit}
+DiscardCard I want to discard the {rank} of {suit}
+DiscardCard discard the {rank} of {suit}
+DiscardCard please discard the {rank} of {suit}
+DiscardCard I'd like to discard the {rank} of {suit}
+DiscardCard I would like to discard the {rank} of {suit}
+DiscardCard throw away the {rank} of {suit}
 
+NewGame deal a new hand
+NewGame deal a new game
+NewGame give me a new hand
+NewGame begin a new game
+NewGame start the game
 NewGame a new game
 NewGame a new deal
 NewGame a new hand
