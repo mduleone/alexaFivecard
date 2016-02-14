@@ -12,7 +12,9 @@ module.exports = function (intent, session, response) {
 
     var newSession = _.assign({}, session);
 
-    if (typeof newSession.attributes.playing === 'undefined' ||
+    if (typeof newSession === 'undefined' ||
+        typeof newSession.attributes === 'undefined' ||
+        typeof newSession.attributes.playing === 'undefined' ||
         typeof newSession.attributes.state === 'undefined' ||
         newSession.attributes.playing === false ||
         newSession.attributes.state === fcUtils.states.NEW_GAME) {

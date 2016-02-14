@@ -14,6 +14,15 @@ module.exports = function (intent, session, response) {
     console.log("!!!!!!!!!!\n\n!!!!!!!!!noIntent!!!!!!!!!", intent);
     console.log("!!!!!!!!!session!!!!!!!!!", session);
     var newSession = _.assign({}, session);
+    if (typeof newSession === 'undefined' ||
+        typeof newSession.attributes === 'undefined' ||
+        typeof newSession.attributes.state === 'undefined') {
+        newSession = {
+            attributes: {
+                state: null,
+            }
+        }
+    }
 
     switch (newSession.attributes.state) {
         case fcUtils.states.NEW_GAME:

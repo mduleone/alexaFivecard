@@ -20,7 +20,7 @@ var PAIR = 1;
 var HIGHCARD = 0;
 
 function newDeck() {
-    return shuffle(cards);
+    return shuffle(cards.slice());
 }
 
 function drawCards(numCards, deck) {
