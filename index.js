@@ -1,9 +1,4 @@
 var AlexaSkill = require('./AlexaSkill');
-var _ = require('lodash-node');
-var poker = require('./poker');
-var utils = require('./poker-utils');
-var fivecard = require('./fivecard');
-var fcUtils = require('./fivecard-utils');
 var APP_ID = "amzn1.echo-sdk-ams.app.1b7713b0-bfd0-4831-8506-447384607766";
 
 //Custom Intents
